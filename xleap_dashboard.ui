@@ -6,18 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>647</width>
-    <height>322</height>
+    <width>1049</width>
+    <height>433</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout_4">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
      <item>
-      <widget class="PyDMEmbeddedDisplay" name="PyDMEmbeddedDisplay">
+      <widget class="PyDMEmbeddedDisplay" name="embedded_laser_heater">
        <property name="toolTip">
         <string/>
        </property>
@@ -27,25 +27,143 @@
       </widget>
      </item>
      <item>
-      <widget class="PyDMEmbeddedDisplay" name="PyDMEmbeddedDisplay_2">
+      <widget class="PyDMEmbeddedDisplay" name="embeded_compression">
        <property name="toolTip">
         <string/>
        </property>
        <property name="filename" stdset="0">
-        <string>compression.ui</string>
+        <string>compression.py</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMEmbeddedDisplay" name="PyDMEmbeddedDisplay">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="filename" stdset="0">
+        <string>wiggler_summary.ui</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="PyDMEmbeddedDisplay" name="PyDMEmbeddedDisplay_4">
+      <widget class="PyDMTimePlot" name="PyDMTimePlot">
        <property name="toolTip">
         <string/>
        </property>
+       <property name="backgroundBrush">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </property>
+       <property name="axisColor">
+        <color>
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </property>
+       <property name="showLegend">
+        <bool>true</bool>
+       </property>
+       <property name="curves">
+        <stringlist>
+         <string>{&quot;channel&quot;: &quot;EM1K0:GMD:HPS:milliJoulesPerPulse&quot;, &quot;name&quot;: &quot;SXR GMD&quot;, &quot;color&quot;: &quot;#55007f&quot;, &quot;lineStyle&quot;: 1, &quot;lineWidth&quot;: 1, &quot;symbol&quot;: null, &quot;symbolSize&quot;: 10}</string>
+        </stringlist>
+       </property>
+       <property name="updatesAsynchronously">
+        <bool>false</bool>
+       </property>
+       <property name="timeSpan">
+        <double>60.000000000000000</double>
+       </property>
+       <property name="updateInterval">
+        <double>0.300000000000000</double>
+       </property>
+       <property name="minYRange">
+        <double>-0.500000000000000</double>
+       </property>
+       <property name="maxYRange">
+        <double>0.500000000000000</double>
+       </property>
       </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLineEdit" name="RefreshRateTimechart">
+         <property name="toolTip">
+          <string>TimeChartHz</string>
+         </property>
+         <property name="placeholderText">
+          <string>Strip Refresh</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="timeRmsScale">
+         <property name="toolTip">
+          <string>timeRmsScale</string>
+         </property>
+         <property name="placeholderText">
+          <string>timeRmsScale</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="timeSumScale">
+         <property name="toolTip">
+          <string>timeSumScale</string>
+         </property>
+         <property name="whatsThis">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="placeholderText">
+          <string>timeSumScale</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="timeYmin">
+         <property name="toolTip">
+          <string>timeYmin</string>
+         </property>
+         <property name="inputMask">
+          <string/>
+         </property>
+         <property name="placeholderText">
+          <string>timeYmin</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="timeYmax">
+         <property name="toolTip">
+          <string>timeYmax</string>
+         </property>
+         <property name="placeholderText">
+          <string>timeYmax</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <widget class="PyDMWaveformPlot" name="PyDMWaveformPlot">
@@ -64,6 +182,15 @@
        <property name="toolTip">
         <string/>
        </property>
+       <property name="backgroundBrush">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </property>
        <property name="interactive">
         <bool>true</bool>
        </property>
@@ -71,12 +198,19 @@
         <rectf>
          <x>0.000000000000000</x>
          <y>0.000000000000000</y>
-         <width>200.000000000000000</width>
-         <height>196.000000000000000</height>
+         <width>417.000000000000000</width>
+         <height>172.000000000000000</height>
         </rectf>
        </property>
        <property name="showXGrid">
         <bool>false</bool>
+       </property>
+       <property name="axisColor">
+        <color>
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
        </property>
        <property name="xLabels">
         <stringlist>
@@ -95,6 +229,40 @@
        </property>
       </widget>
      </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLineEdit" name="specXmin">
+         <property name="toolTip">
+          <string>Spec X Min</string>
+         </property>
+         <property name="placeholderText">
+          <string>X min</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="specXmax">
+         <property name="toolTip">
+          <string>Spec X Max</string>
+         </property>
+         <property name="placeholderText">
+          <string>X Max</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="RefreshRateWaveform">
+         <property name="toolTip">
+          <string>WaveformHz</string>
+         </property>
+         <property name="placeholderText">
+          <string>Spec Refresh</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
     </layout>
    </item>
   </layout>
@@ -104,6 +272,11 @@
    <class>PyDMWaveformPlot</class>
    <extends>QGraphicsView</extends>
    <header>pydm.widgets.waveformplot</header>
+  </customwidget>
+  <customwidget>
+   <class>PyDMTimePlot</class>
+   <extends>QGraphicsView</extends>
+   <header>pydm.widgets.timeplot</header>
   </customwidget>
   <customwidget>
    <class>PyDMEmbeddedDisplay</class>

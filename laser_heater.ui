@@ -44,10 +44,10 @@
       <enum>QFrame::Plain</enum>
      </property>
      <property name="macros" stdset="0">
-      <string>{&quot;read_pv&quot;:&quot;SIOC:SYS0:ML03:AO126&quot;,&quot;DeviceName&quot;:&quot;Laser Delay&quot;}</string>
+      <string>{&quot;write_pv&quot;:&quot;SIOC:SYS0:ML03:AO126&quot;,&quot;read_pv&quot;:&quot;SIOC:SYS0:ML03:AO126&quot;,&quot;DeviceName&quot;:&quot;Laser Delay&quot;}</string>
      </property>
      <property name="filename" stdset="0">
-      <string>read_write_tweak_device.ui</string>
+      <string>read_write_tweak_device.py</string>
      </property>
     </widget>
    </item>

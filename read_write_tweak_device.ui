@@ -61,7 +61,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>25</width>
+       <width>50</width>
        <height>0</height>
       </size>
      </property>
@@ -80,8 +80,14 @@
      <property name="frame">
       <bool>true</bool>
      </property>
+     <property name="precision" stdset="0">
+      <number>0</number>
+     </property>
      <property name="channel" stdset="0">
-      <string>ca://${ioc_write}.${pv_write}</string>
+      <string>ca://${write_pv}</string>
+     </property>
+     <property name="displayFormat" stdset="0">
+      <enum>PyDMLineEdit::Decimal</enum>
      </property>
     </widget>
    </item>
@@ -113,6 +119,9 @@
      </property>
      <property name="text">
       <string>readpV</string>
+     </property>
+     <property name="precision" stdset="0">
+      <number>0</number>
      </property>
      <property name="channel" stdset="0">
       <string>ca://${read_pv}</string>
@@ -161,7 +170,7 @@
       <bool>false</bool>
      </property>
      <property name="channel" stdset="0">
-      <string>ca://${ioc_write}.${pv_write}</string>
+      <string>ca://${write_pv}</string>
      </property>
      <property name="pressValue" stdset="0">
       <string>0</string>
@@ -201,7 +210,7 @@
       <string>+</string>
      </property>
      <property name="channel" stdset="0">
-      <string>ca://${ioc_write}.${pv_write}</string>
+      <string>ca://${write_pv}</string>
      </property>
      <property name="pressValue" stdset="0">
       <string>0</string>
@@ -224,7 +233,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>15</width>
+       <width>35</width>
        <height>0</height>
       </size>
      </property>
@@ -236,6 +245,9 @@
      </property>
      <property name="toolTip">
       <string>tweak amount</string>
+     </property>
+     <property name="inputMask">
+      <string>#</string>
      </property>
      <property name="text">
       <string>0</string>

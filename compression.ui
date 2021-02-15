@@ -57,7 +57,7 @@
       <string>{&quot;DeviceName&quot;:&quot;BC1 I&quot;,&quot;write_pv&quot;:&quot;FBCK:FB04:LG01:S3DES&quot;,&quot;read_pv&quot;:&quot;BLEN:LI21:265:AIMAXCUS1H&quot;}</string>
      </property>
      <property name="filename" stdset="0">
-      <string>read_write_tweak_device.ui</string>
+      <string>read_write_tweak_device.py</string>
      </property>
     </widget>
    </item>
@@ -88,7 +88,7 @@
       <string>{&quot;DeviceName&quot;:&quot;BC2 I&quot;,&quot;write_pv&quot;:&quot;FBCK:FB04:LG01:S5DES&quot;,&quot;read_pv&quot;:&quot;BLEN:LI24:886:BIMAXCUS1H&quot;}</string>
      </property>
      <property name="filename" stdset="0">
-      <string>read_write_tweak_device.ui</string>
+      <string>read_write_tweak_device.py</string>
      </property>
     </widget>
    </item>
@@ -119,7 +119,7 @@
       <string>{&quot;DeviceName&quot;:&quot;Coll Left Jaw&quot;,&quot;write_pv&quot;:&quot;COLL:LI21:235:MOTR.VAL&quot;,&quot;read_pv&quot;:&quot;COLL:LI21:235:MOTR.RBV&quot;}</string>
      </property>
      <property name="filename" stdset="0">
-      <string>read_write_tweak_device.ui</string>
+      <string>read_write_tweak_device.py</string>
      </property>
     </widget>
    </item>
@@ -150,7 +150,7 @@
       <string>{&quot;DeviceName&quot;:&quot;Coll Right Jaw&quot;,&quot;write_pv&quot;:&quot;COLL:LI21:236:MOTR.VAL&quot;,&quot;read_pv&quot;:&quot;COLL:LI21:236:MOTR.RBV&quot;}</string>
      </property>
      <property name="filename" stdset="0">
-      <string>read_write_tweak_device.ui</string>
+      <string>read_write_tweak_device.py</string>
      </property>
     </widget>
    </item>

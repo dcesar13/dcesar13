@@ -89,6 +89,9 @@
      <property name="text">
       <string>readpV</string>
      </property>
+     <property name="precision" stdset="0">
+      <number>0</number>
+     </property>
      <property name="channel" stdset="0">
       <string>ca://${read_pv}</string>
      </property>
@@ -96,45 +99,6 @@
       <enum>PyDMLabel::Decimal</enum>
      </property>
     </widget>
-   </item>
-   <item>
-    <spacer name="horizontalSpacer_7">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <spacer name="horizontalSpacer_6">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <spacer name="horizontalSpacer_5">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item>
     <spacer name="horizontalSpacer_4">

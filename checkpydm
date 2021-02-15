@@ -1,0 +1,5 @@
+import inspect
+import pydm
+
+#print(inspect.getmembers(pydm))
+print(pydm.__file__)
