@@ -67,7 +67,7 @@ class xleap_dashboard(Display):
             self.waveformPersists.append(curve)
         persistPV = channel.PyDMChannel(address='TMO:VLS:CAM:01:IMAGE2:ArrayData', value_slot=self.persistCallback)
         persistPV.connect()       
-                               
+        self.persist_initalized=True                       
     def ui_filename(self):
         # Point to our UI file
         return 'xleap_dashboard.ui'
@@ -78,8 +78,14 @@ class xleap_dashboard(Display):
     
     def setNpersist(self):
         # Just delete all old curves and add N new ones. Overhead ok if not done often.
+        try:
+            self.numPersist=int(self.NPersist.text())
+        except:
+            return None
+        self.persist_initalized=False
+        time.sleep(0.1) #Just to be safe, that we're not writing to one right now!
+        self.waveformPersistIdx=0;
         [self.ui.PyDMWaveformPlot.removeChannel(x) for x in self.waveformPersists]
-        self.numPersist=int(self.setNpersist.text())
         self.waveformPersists=[];
         for x in range(self.numPersist):
             plot_opts = {}
@@ -98,15 +104,17 @@ class xleap_dashboard(Display):
             self.waveformPersists.append(curve)
         persistPV = channel.PyDMChannel(address='TMO:VLS:CAM:01:IMAGE2:ArrayData', value_slot=self.persistCallback)
         persistPV.connect()
+        self.persist_initalized=True
         return None
     
     @Slot(np.ndarray)
     def persistCallback(self,values):
-        self.waveformPersists[self.waveformPersistIdx].receiveYWaveform(values)
-        if self.waveformPersistIdx<(len(self.waveformPersists)-1):
-             self.waveformPersistIdx= self.waveformPersistIdx+1
-        else:
-             self.waveformPersistIdx=0
+        if self.persist_initalized:
+            self.waveformPersists[self.waveformPersistIdx].receiveYWaveform(values)
+            if self.waveformPersistIdx<(len(self.waveformPersists)-1):
+                 self.waveformPersistIdx= self.waveformPersistIdx+1
+            else:
+                 self.waveformPersistIdx=0
         
     def setRefreshRateTimechart(self):
         try:
