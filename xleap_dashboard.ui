@@ -6,18 +6,42 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1049</width>
-    <height>433</height>
+    <width>1026</width>
+    <height>505</height>
    </rect>
   </property>
+  <property name="baseSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>XLEAP Dashboard</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_4">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0">
      <item>
       <widget class="PyDMEmbeddedDisplay" name="embedded_laser_heater">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>1</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>110</height>
+        </size>
+       </property>
        <property name="toolTip">
         <string/>
        </property>
@@ -28,6 +52,30 @@
      </item>
      <item>
       <widget class="PyDMEmbeddedDisplay" name="embeded_compression">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>2</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>75</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>400</height>
+        </size>
+       </property>
+       <property name="baseSize">
+        <size>
+         <width>0</width>
+         <height>75</height>
+        </size>
+       </property>
        <property name="toolTip">
         <string/>
        </property>
@@ -41,14 +89,48 @@
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
+         <verstretch>1</verstretch>
         </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>80</height>
+        </size>
        </property>
        <property name="toolTip">
         <string/>
        </property>
        <property name="filename" stdset="0">
         <string>wiggler_summary.ui</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMEmbeddedDisplay" name="PyDMEmbeddedDisplay_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>2</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>45</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="filename" stdset="0">
+        <string>sxr_undulator_summary.py</string>
        </property>
       </widget>
      </item>
@@ -82,7 +164,8 @@
        </property>
        <property name="curves">
         <stringlist>
-         <string>{&quot;channel&quot;: &quot;EM1K0:GMD:HPS:milliJoulesPerPulse&quot;, &quot;name&quot;: &quot;SXR GMD&quot;, &quot;color&quot;: &quot;#55007f&quot;, &quot;lineStyle&quot;: 1, &quot;lineWidth&quot;: 1, &quot;symbol&quot;: null, &quot;symbolSize&quot;: 10}</string>
+         <string>{&quot;channel&quot;: &quot;EM1K0:GMD:HPS:milliJoulesPerPulse&quot;, &quot;name&quot;: &quot;GMD&quot;, &quot;color&quot;: &quot;#55007f&quot;, &quot;lineStyle&quot;: 1, &quot;lineWidth&quot;: 1, &quot;symbol&quot;: null, &quot;symbolSize&quot;: 10}</string>
+         <string>{&quot;channel&quot;: &quot;EM2K0:XGMD:HPS:milliJoulesPerPulse&quot;, &quot;name&quot;: &quot;XGMD&quot;, &quot;color&quot;: &quot;black&quot;, &quot;lineStyle&quot;: 1, &quot;lineWidth&quot;: 1, &quot;symbol&quot;: null, &quot;symbolSize&quot;: 10}</string>
         </stringlist>
        </property>
        <property name="updatesAsynchronously">
@@ -198,8 +281,8 @@
         <rectf>
          <x>0.000000000000000</x>
          <y>0.000000000000000</y>
-         <width>417.000000000000000</width>
-         <height>172.000000000000000</height>
+         <width>553.000000000000000</width>
+         <height>244.000000000000000</height>
         </rectf>
        </property>
        <property name="showXGrid">
@@ -252,9 +335,19 @@
         </widget>
        </item>
        <item>
+        <widget class="QLineEdit" name="NPersist">
+         <property name="toolTip">
+          <string>NPersist</string>
+         </property>
+         <property name="placeholderText">
+          <string>NPersist</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLineEdit" name="RefreshRateWaveform">
          <property name="toolTip">
-          <string>WaveformHz</string>
+          <string>Refresh Hz</string>
          </property>
          <property name="placeholderText">
           <string>Spec Refresh</string>

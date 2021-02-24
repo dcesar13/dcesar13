@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>529</width>
-    <height>38</height>
+    <height>25</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -15,6 +15,12 @@
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>25</height>
+   </size>
   </property>
   <property name="maximumSize">
    <size>
@@ -40,7 +46,7 @@
      <property name="minimumSize">
       <size>
        <width>50</width>
-       <height>0</height>
+       <height>15</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -48,6 +54,9 @@
        <width>16777215</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
      </property>
      <property name="text">
       <string>${DeviceName}</string>
@@ -68,7 +77,7 @@
      <property name="minimumSize">
       <size>
        <width>50</width>
-       <height>0</height>
+       <height>15</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -108,7 +117,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>40</width>
-       <height>20</height>
+       <height>10</height>
       </size>
      </property>
     </spacer>
@@ -121,7 +130,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>40</width>
-       <height>20</height>
+       <height>10</height>
       </size>
      </property>
     </spacer>
@@ -134,7 +143,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>40</width>
-       <height>20</height>
+       <height>10</height>
       </size>
      </property>
     </spacer>
@@ -147,7 +156,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>40</width>
-       <height>20</height>
+       <height>10</height>
       </size>
      </property>
     </spacer>

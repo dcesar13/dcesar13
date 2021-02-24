@@ -9,7 +9,7 @@ class read_write_tweak_device(Display):
     def __init__(self, parent=None, args=None, macros=None):
         super(read_write_tweak_device, self).__init__(parent=parent, args=args, macros=macros)
         # Compression board
-        self.ui.tweakVal.textChanged.connect(self.tweakVal_change)
+        self.ui.tweakVal.returnPressed.connect(self.tweakVal_change)
 
     def ui_filename(self):
         # Point to our UI file
@@ -19,7 +19,7 @@ class read_write_tweak_device(Display):
         # Return the full path to the UI file
         return path.join(path.dirname(path.realpath(__file__)), self.ui_filename())
 
-    def tweakVal_change(self, int):
+    def tweakVal_change(self):
         buttons=[self.ui.tweakDown,self.ui.tweakUp]
         try:
             self.tweakDown.updatePressValue(-1*float(self.ui.tweakVal.text()))

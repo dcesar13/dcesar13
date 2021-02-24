@@ -2,11 +2,9 @@ import time
 from os import path
 from pydm import Display
 from pydm.widgets import channel
-from pydm.widgets.waveformplot import WaveformCurveItem
 #from qtpy.QtUiTools import QUiLoader
 from qtpy.QtWidgets import QCheckBox, QWidget, QVBoxLayout
-from qtpy.QtCore import Signal, Slot, Property, QTimer, QThread
-from PyQt5.QtGui import QColor
+from qtpy.QtCore import Signal, Slot, Property, QTimer
 #import epics
 import time
 import numpy as np
@@ -17,18 +15,16 @@ class xleap_dashboard(Display):
     def __init__(self, parent=None, args=None, macros=None):
         super(xleap_dashboard, self).__init__(parent=parent, args=args, macros=None)
 
-        self.specSumCurve=self.ui.PyDMTimePlot.addYChannel(y_channel=None, name='Sum spec', color='#ea2e06', lineStyle=1, lineWidth=1, symbol=None, symbolSize=None)
+        self.specSumCurve=self.ui.PyDMTimePlot.addYChannel(y_channel=None, name='Sum spec', color='#000', lineStyle=1, lineWidth=1, symbol=None, symbolSize=None)
         self.specRmsCurve=self.ui.PyDMTimePlot.addYChannel(y_channel=None, name='FWHM spec', color='#f59042', lineStyle=0, lineWidth=1, symbol=1, symbolSize=1)
         
         #epics.camonitor('TMO:VLS:CAM:01:IMAGE2:ArrayData',callback=sumSpecCallback)
         #mypv=epics.PV('BPMS:UNDS:4090:X')
         #mypv.add_callback(self.sumSpecCallback)
-        mypv = channel.PyDMChannel(address='TMO:VLS:CAM:01:IMAGE2:ArrayData', value_slot=self.forwardWaveformStats)
+        mypv = channel.PyDMChannel(address='TMO:VLS:CAM:01:IMAGE2:ArrayData', value_slot=self.newSpecCallback)
         mypv.connect()
         self.sumScale=10000
         self.rmsScale=1;
-        
-        #QColor(255, 0, 0, 127)
         self.PyDMTimePlot.maxRedrawRate=1
         self.PyDMWaveformPlot.maxRedrawRate=1
         self.RefreshRateTimechart.returnPressed.connect(self.setRefreshRateTimechart)
@@ -42,34 +38,8 @@ class xleap_dashboard(Display):
         
         self.specXmin.returnPressed.connect(self.setWaveformXRange)
         self.specXmax.returnPressed.connect(self.setWaveformXRange)
+
         
-        
-        self.PyDMWaveformPlot.autoRangeY=False
-        self.PyDMWaveformPlot.minYRange=300
-        self.PyDMWaveformPlot.maxYRange=800
-        self.numPersist=10;
-        self.waveformPersistIdx=0;
-        self.NPersist.returnPressed.connect(self.setNpersist)
-        #self.waveformPersists=[self.ui.PyDMWaveformPlot.addChannel(y_channel=None, x_channel=None, name=None, color=QColor(255,0,0,200), lineStyle=1, lineWidth=1, symbol=None, symbolSize=None) for x in range(self.numPersist)]
-        self.waveformPersists=[];
-        for x in range(self.numPersist):
-            plot_opts = {}
-            plot_opts['lineStyle'] = 1
-            plot_opts['lineWidth'] = 1
-            plot_opts['redraw_mode'] = WaveformCurveItem.REDRAW_ON_EITHER
-            self.ui.PyDMWaveformPlot._needs_redraw = False
-            curve = WaveformCurveItem(y_addr=None,
-                                      x_addr=None,
-                                      name=None,
-                                      color=QColor(255,0,0,60),
-                                      **plot_opts)
-            self.ui.PyDMWaveformPlot.channel_pairs[(None, None)] = curve
-            self.ui.PyDMWaveformPlot.addCurve(curve, curve_color=QColor(255,0,0,200))
-            curve.data_changed.connect(self.ui.PyDMWaveformPlot.set_needs_redraw)
-            self.waveformPersists.append(curve)
-        persistPV = channel.PyDMChannel(address='TMO:VLS:CAM:01:IMAGE2:ArrayData', value_slot=self.persistCallback)
-        persistPV.connect()       
-                               
     def ui_filename(self):
         # Point to our UI file
         return 'xleap_dashboard.ui'
@@ -78,19 +48,23 @@ class xleap_dashboard(Display):
         # Return the full path to the UI file
         return path.join(path.dirname(path.realpath(__file__)), self.ui_filename())
     
-    def setNpersist(self):
-        #self.waveformPersists=[self.ui.PyDMWaveformPlot.addChannel(y_channel=None, x_channel=None, name=None, color=QColor(255,0,0,200), lineStyle=1, lineWidth=1, symbol=None, symbolSize=None) for x in range(int(self.NPersist.text()))]
-        #self.numPersist=int(self.NPersist.text())
-        #self.waveformPersistIdx=0
-        return None
-    
+    @Slot(float)
+    @Slot(int)
     @Slot(np.ndarray)
-    def persistCallback(self,values):
-        self.waveformPersists[self.waveformPersistIdx].receiveYWaveform(values)
-        if self.waveformPersistIdx<(len(self.waveformPersists)-1):
-             self.waveformPersistIdx= self.waveformPersistIdx+1
-        else:
-             self.waveformPersistIdx=0
+    def newSpecCallback(self,values):
+        if int(self.PyDMWaveformPlot.minXRange)<int(self.PyDMWaveformPlot.maxXRange):
+            values=values[int(self.PyDMWaveformPlot.minXRange):int(self.PyDMWaveformPlot.maxXRange)]
+        lowmask=values<np.percentile(values,25)
+        bg=np.median(values[lowmask])
+        values=values-bg
+        self.specSumCurve.receiveNewValue(sum(values)/self.sumScale)
+        idx=np.argmax(values)
+        idx1=np.clip(idx-5,0,len(values))
+        idx2=np.clip(idx+5,0,len(values))
+        if np.mean(values[idx1:idx2])>(2*np.std(values[lowmask])+np.mean(values[lowmask])):
+            fwhm=np.abs(np.diff(peak_fwhm(idx,values,outfrompeak=True,interp=True)))
+            self.specRmsCurve.receiveNewValue(fwhm/self.rmsScale)
+        return None
         
     def setRefreshRateTimechart(self):
         try:
@@ -136,64 +110,7 @@ class xleap_dashboard(Display):
                 self.PyDMWaveformPlot.maxXRange=float(self.specXmax.text())
             except:
                 pass
-
-    
-    @Slot(np.ndarray)
-    def forwardWaveformStats(self,values):
-        """
-        Calls thread to analysze waveform stats and sends them to a time plot, provided we are not currently processing a waveform.
-        Values is the waveform.
-        """
-        if self.WFthread is not None and not self.WFthread.isFinished():
-            #logger.warning(
-            #    "Image processing has taken longer than the refresh rate.")
-            return
-        self.waveform=values
-        self.WFthread = waveformUpdateThread(self)
-        self.WFthread.updateSignal.connect(self.__updateWaveformStats) #when waveformUpdateThread emits we run __updateWaveformStats and it sends the data to the plotting widget
-        logging.debug("ImageView RedrawImage Thread Launched")
-        self.thread.start()        
-    def __updateWaveformStats(self,data):
-        fwhm,tot=data[0],data[1]
-        self.specRmsCurve.receiveNewValue(tot)
-        self.specSumCurve.receiveNewValue(fwhm)
-        
-    def SpecAnalysis(self,values):
-        if int(self.PyDMWaveformPlot.minXRange)<int(self.PyDMWaveformPlot.maxXRange):
-            values=values[int(self.PyDMWaveformPlot.minXRange):int(self.PyDMWaveformPlot.maxXRange)]
-        lowmask=values<np.percentile(values,25)
-        bg=np.median(values[lowmask])
-        values=values-bg
-        total=sum(values)/self.sumScale
-        #self.specSumCurve.receiveNewValue(sum(values)/self.sumScale)
-        idx=np.argmax(values)
-        idx1=np.clip(idx-5,0,len(values))
-        idx2=np.clip(idx+5,0,len(values))
-        if np.mean(values[idx1:idx2])>(100+3*np.std(values[lowmask])+np.mean(values[lowmask])):
-            fwhm=np.abs(np.diff(peak_fwhm(idx,values,outfrompeak=True,interp=True)))
-            #self.specRmsCurve.receiveNewValue(fwhm/self.rmsScale)
-        else:
-            fwhm=0;
-        return total,fwhm
-    
-class waveformUpdateThread(QThread):
-    """Single thread for running waveform analysis. Emits results of calcultion when done. Has an inhereited .isFinished() which is used to check when analysis is done.
-"""
-    updateSignal = Signal(list)
-
-    def __init__(self, dashboard_view):
-        QThread.__init__(self)
-        self.dashboard_view = dashboard_view
-
-    def run(self):
-        waveform = self.dashboard_view.waveform       
-
-        if len(waveform) <= 0:
-            return
-
-        total,fwhm = self.dashboard_view.SpecAnalysis(waveform)
-        self.updateSignal.emit([total,fwhm])
-        
+#def receiveNewValue(self, new_value):
 def peak_fwhm(pk_idx,lis,thresh=None,outfrompeak=True,interp=False):
     """
     pk_idx: integer index of the peak in list

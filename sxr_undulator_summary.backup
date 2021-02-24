@@ -1,0 +1,89 @@
+import time
+from os import path
+from pydm import Display
+from pydm.widgets import channel
+from qtpy.QtWidgets import QCheckBox, QWidget, QVBoxLayout
+from qtpy.QtCore import Signal, Slot, Property, QTimer
+import time
+from functools import partial
+import numpy as np
+import meme.names
+
+
+kact=meme.names.list_pvs('BPMS:CLTH:%:X')#('USEG:UNDS:%:KAct')
+taperact=meme.names.list_pvs('USEG:UNDS:%:TaperAct')
+taperact=kact;
+
+class SxrUndulatorSummary(Display):
+    def __init__(self, parent=None, args=None, macros=None):
+        super(SxrUndulatorSummary, self).__init__(parent=parent, args=args, macros=None)
+        
+        self.ui.und_k_plot.addChannel(y_channel=None, x_channel=None, name='K', color='#000', lineStyle=1, lineWidth=1, symbol=1, symbolSize=2, redraw_mode=None, buffer_size=None)
+        print(self.und_k_plot.channel_pairs)
+        self.und_k_curve=self.und_k_plot.channel_pairs[(None, None)]
+        
+#Set und_k_curve X axis
+        cell_frac=3.4/4.4
+        cell_starts=np.arange(0,len(kact))
+        cell_ends=cell_starts+cell_frac
+        x=np.hstack((cell_starts,cell_starts,cell_ends,cell_ends))
+        self.und_k_curve.receiveXValue(x)
+#K Channels        
+        kact_channels =[channel.PyDMChannel(address=x, value_slot=partial(self.new_kact_callback, x)) for x in kact]
+        self.kact_values=np.zeros(len(kact))
+        taper_channels =[channel.PyDMChannel(address=x, value_slot=partial(self.new_taper_Callback, x)) for x in taperact]
+        self.taper_values=np.zeros(len(taper_channels))
+        [x.connect() for x in kact_channels] 
+        [x.connect() for x in taper_channels]        
+#Plot settings        
+        self.und_k_plot.maxRedrawRate=1        
+        self.x_min.returnPressed.connect(self.set_x_range)
+        self.x_max.returnPressed.connect(self.set_x_range)
+        
+        
+    def ui_filename(self):
+        # Point to our UI file
+        return 'sxr_undulator_summary.ui'
+
+    def ui_filepath(self):
+        # Return the full path to the UI file
+        return path.join(path.dirname(path.realpath(__file__)), self.ui_filename())
+    
+    @Slot(float)
+    def new_kact_callback(self,pvname,value):
+        idx=kact.index(pvname)
+        self.kact_values[idx]=value
+        self.draw_k()
+        return None
+    
+    @Slot(float)
+    def new_taper_Callback(self,pvname,value):
+        idx=taperact.index(pvname)
+        self.taper_values[idx]=value
+        self.draw_k()
+        return None
+    
+    def draw_k(self):
+#Y axis
+        zero_pad=np.zeros(len(kact))
+        y=np.zeros(len(kact)*4)
+        y[0::4]=zero_pad
+        y[1::4]=self.kact_values
+        y[2::4]=self.kact_values+self.taper_values*0.1
+        y[3::4]=zero_pad
+        self.und_k_curve.receiveYValue(y)
+      
+        return None
+        
+    def set_x_range(self):
+        self.und_k_plot.autoRangeX=False
+        if len(self.x_min.text())>0:
+            try:
+                self.und_k_plot.minXRange=float(self.x_min.text())
+            except:
+                pass
+        if len(self.x_max.text())>0:
+            try:
+                self.und_k_plot.maxXRange=float(self.x_max.text())
+            except:
+                pass

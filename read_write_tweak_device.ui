@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>539</width>
-    <height>42</height>
+    <height>28</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -15,6 +15,12 @@
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>20</height>
+   </size>
   </property>
   <property name="maximumSize">
    <size>
@@ -37,7 +43,7 @@
      <property name="minimumSize">
       <size>
        <width>50</width>
-       <height>0</height>
+       <height>15</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -54,7 +60,7 @@
    <item>
     <widget class="PyDMLineEdit" name="DeviceSet">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
        <horstretch>1</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -62,7 +68,7 @@
      <property name="minimumSize">
       <size>
        <width>50</width>
-       <height>0</height>
+       <height>15</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -105,7 +111,7 @@
      <property name="minimumSize">
       <size>
        <width>50</width>
-       <height>0</height>
+       <height>15</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -131,7 +137,7 @@
    <item>
     <widget class="PyDMPushButton" name="tweakDown">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
        <horstretch>1</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -139,7 +145,7 @@
      <property name="minimumSize">
       <size>
        <width>15</width>
-       <height>0</height>
+       <height>15</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -183,7 +189,7 @@
    <item>
     <widget class="PyDMPushButton" name="tweakUp">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
        <horstretch>1</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -191,7 +197,7 @@
      <property name="minimumSize">
       <size>
        <width>15</width>
-       <height>0</height>
+       <height>15</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -226,7 +232,7 @@
       <bool>true</bool>
      </property>
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>1</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -234,7 +240,7 @@
      <property name="minimumSize">
       <size>
        <width>35</width>
-       <height>0</height>
+       <height>15</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -265,7 +271,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>40</width>
-       <height>20</height>
+       <height>15</height>
       </size>
      </property>
     </spacer>
